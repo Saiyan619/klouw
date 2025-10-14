@@ -58,7 +58,16 @@ export const useWithDrawFunds = ()=>{
             const txSig = await provider.sendAndConfirm(tx);
             console.log("Withdraw Successful", txSig);
             return txSig;
-        } catch (error) {
+            }catch (error: unknown) {
+    const err = error as Error & { 
+        message?: string 
+    };
+    
+    if (err.message?.includes("already been processed")) {
+        console.warn("Transaction was already processed - this might be a false error");
+        // If you know the transaction succeeded, you might want to return a success status
+        return "Transaction completed (already processed)";
+    }
             console.error("Withdraw Error", error);
             throw error;
         }

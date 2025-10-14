@@ -100,7 +100,14 @@ export const useSplitAndShare = () => {
             const txSig = await provider.sendAndConfirm(tx);
             console.log("split and share successful", txSig);
             return txSig;
-        } catch (error) {
+        } catch (error:unknown) {
+          const err = error as Error & {
+                message?: string;
+            };
+             if (err.message?.includes("already been processed")) {
+                console.warn("Transaction already processed (duplicate call ignored)");
+                return "success"; // Return success since it actually worked
+            }
             console.error(error);
         }
     }

@@ -21,7 +21,7 @@ const UserVaults = () => {
     const { data, refetch } = useGetAllVaults();
     useEffect(() => {
       refreshVault();
-    }, [refetch()])
+    }, [])
 
     
 

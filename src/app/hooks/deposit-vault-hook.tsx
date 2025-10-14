@@ -60,31 +60,23 @@ export const useDepositVault = () => {
                 mint: mintAddressPubkey,
                 tokenProgram: TOKEN_PROGRAM_ID,
                 systemProgram: SystemProgram.programId,
-            }).transaction();
-
-            // Send and confirm the transaction
-            const signature = await provider.sendAndConfirm(transaction);
+            }).rpc()
             
-            console.log("Deposited successfully", signature);
-            return signature;
+            console.log("Deposited successfully", transaction);
+            return transaction;
 
         }catch (error: unknown) {
     const err = error as Error & { 
-        logs?: string[]; 
         message?: string 
     };
     
-    // More detailed error handling
-    if (err.logs) {
-        console.error("Transaction logs:", err.logs);
-    }
     if (err.message?.includes("already been processed")) {
         console.warn("Transaction was already processed - this might be a false error");
         // If you know the transaction succeeded, you might want to return a success status
         return "Transaction completed (already processed)";
     }
     console.error("Deposit failed:", err);
-    throw error; // Re-throw to handle in the UI component
+    throw error; 
 }
     }
 

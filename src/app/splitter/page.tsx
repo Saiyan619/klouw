@@ -3,7 +3,6 @@
 import React from 'react'
 import NavBar from './dapp-components/NavBar'
 import CreateVault from './dapp-components/createVault/CreateVault'
-import { useWallet } from '@solana/wallet-adapter-react'
 const TokenSpltterPage = () => {
 
   return (

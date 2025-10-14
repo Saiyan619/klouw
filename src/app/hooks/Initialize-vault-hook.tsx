@@ -75,44 +75,32 @@ export const useInitializeVault = () => {
             console.log("Vault initialized successfully!");
             return tx;
           
-        } catch (error: unknown) {
+        } catch (error) {
             const err = error as Error & {
                 logs?: string[];
                 message?: string;
                 code: string;
             };
+
+             if (err.message?.includes("already been processed")) {
+                console.warn("Transaction already processed (duplicate call ignored)");
+                return "success"; // Return success since it actually worked
+            }
     
-            console.error("ERROR DETAILS:");
             console.error("Error Message:", err.message);
-            console.error("Error Name:", err.name);
-
-            if (err.logs) {
-                console.error("Transaction Logs:");
-                err.logs.forEach((log: string) => console.error(log));
-            }
-
-            if (err.code) {
-                console.error("Error Code:", err.code);
-            }
-
-            console.error("Full Error:", error);
 
             // Handle harmless client-side errors that shouldn't break the UI
             const safeErrors = [
-                "already been processed",
-                "Unknown action",
-                "Transaction simulation failed",
-                "Blockhash not found",
+                "This transaction already been processed",
             ];
 
             if (safeErrors.some(msg => err.message?.includes(msg))) {
                 console.warn(
                     "Non-critical transaction warning — likely a duplicate simulation or post-send issue."
                 );
-                return; // Stop here gracefully — don’t throw, don’t break the UI
+                return;
             }
 
-            // Throw again only for real on-chain or program errors
             throw error;
         }
 

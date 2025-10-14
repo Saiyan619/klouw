@@ -65,40 +65,21 @@ export const useCloseVault = () => {
             return tx;
            
         }catch (error: unknown) {
-    const err = error as Error & { 
-        logs?: string[]; 
-        code?: string; 
-        message?: string 
-    };
-    
-    if (err.logs) {
-        console.error("Transaction Logs:");
-        err.logs.forEach((log: string) => console.error(log));
-    }
-    if (err.code) {
-        console.error("Error Code:", err.code);
-    }
-    console.error("Full Error:", err);
-    
-    // Handle harmless client-side errors that shouldn't break the UI
-    const safeErrors = [
-        "already been processed",
-        "Unknown action",
-        "Transaction simulation failed",
-        "Blockhash not found",
-    ];
-    
-    if (safeErrors.some(msg => err.message?.includes(msg))) {
-        console.warn(
-            "⚠️ Non-critical transaction warning — likely a duplicate simulation or post-send issue."
-        );
-        return; // Stop here gracefully — don't throw, don't break the UI
-    }
-    
-    // Throw again only for real on-chain or program errors
-    throw error;
-}
-
+            const err = error as Error & {
+                message?: string
+            };
+           
+            // Silently handle the "already processed" error since transaction actually succeeded
+            if (err.message?.includes("already been processed")) {
+                console.warn("Transaction already processed (duplicate call ignored)");
+                return "success"; // Return success since it actually worked
+            }
+           
+            // Log other errors
+            console.error("Close Vault Error:", err.message);
+            // Only throw real errors
+            throw error;
+        }
     }
     
     return { closeVault };

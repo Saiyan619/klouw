@@ -19,7 +19,7 @@ const CreateVault = () => {
 const { data } = useGetAllVaults();
   useEffect(() => {
     console.log(data)
-  }, [data]);
+  }, []);
     return (
         <div className="p-4">
             <div>
