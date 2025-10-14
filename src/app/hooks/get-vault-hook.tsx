@@ -23,7 +23,7 @@ export const useGetVault = () => {
         try {
             const provider = new AnchorProvider(connection, wallet, { commitment: "confirmed" });
             const programId = new PublicKey(idl.address);
-            const program = new Program<TokenSplitter>(idl as any, provider);
+            const program = new Program<TokenSplitter>(idl as TokenSplitter, provider);
         
             const userAddressPubkey = publicKey;
             const mintAddressPubkey = new PublicKey(mintAddress);
