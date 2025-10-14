@@ -15,6 +15,7 @@ import { Card } from '@/components/ui/card'
 import { Label } from "@/components/ui/label"
 import { Check } from 'lucide-react'
 import Image from 'next/image'
+import { useInitializeVault } from '@/app/hooks/Initialize-vault-hook'
 
 interface Token {
   id: string
@@ -26,20 +27,15 @@ interface Token {
 }
 
 const tokens: Token[] = [
-  { id: 'usdc', name: 'USDC', symbol: 'USDC', image:"/usd-coin-usdc-logo.png", color: 'bg-blue-500', mint: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v' },
+  { id: 'usdc', name: 'USDC', symbol: 'USDC', image:"/usd-coin-usdc-logo.png", color: 'bg-blue-500', mint: 'Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr' },
   { id: 'bonk', name: 'BONK', symbol: 'BONK', image:"/bonk1-bonk-logo.png", color: 'bg-orange-500', mint: 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263' },
-  { id: 'usdt', name: 'USDT', symbol: 'USDT', image:"/tether-usdt-logo.png", color: 'bg-green-500', mint: 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB' },
+  { id: 'usdt', name: 'USDT', symbol: 'USDT', image:"/tether-usdt-logo.png", color: 'bg-green-500', mint: 'EJwZgeZrdC8TXTQbQBoL6bfuAnFUUy1PVCMB4DYPzVaS' },
   { id: 'sol', name: 'SOL', symbol: 'SOL', image:"/solana-sol-logo.png", color: 'bg-purple-500', mint: 'So11111111111111111111111111111111111111112' }
 ]
 
 const CreateVaultModal: React.FC = () => {
+  const { InitializeVault } = useInitializeVault();
   const [selectedToken, setSelectedToken] = useState<string | null>(null)
-
-  const handleSubmit = (): void => {
-    console.log('Selected Token:', selectedToken)
-    console.log('Mint Address:', tokens.find(t => t.id === selectedToken)?.mint)
-    // Handle vault creation here
-  }
 
   return (
     <Dialog>
@@ -102,7 +98,8 @@ const CreateVaultModal: React.FC = () => {
           <DialogClose asChild>
             <Button variant="outline" type="button">Cancel</Button>
           </DialogClose>
-          <Button onClick={handleSubmit} disabled={!selectedToken}>
+          {/* <Button onClick={handleSubmit} disabled={!selectedToken}> */}
+          <Button onClick={()=> InitializeVault({mintAddress: tokens.find(t => t.id === selectedToken)?.mint || ""})} disabled={!selectedToken}>
             Create Vault
           </Button>
         </DialogFooter>

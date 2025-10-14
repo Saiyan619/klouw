@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon, Folder, VaultIcon } from "lucide-react"
+import { VaultIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -9,19 +9,28 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty"
-import { Vault } from "lucide-react";
 import CreateVaultModal from "./component/CreateVaultModal";
+import { useEffect } from "react";
+import { useGetAllVaults } from "@/app/hooks/get-vault-hook";
+import UserVaults from "../userVaults/UserVaults";
 
 
 const CreateVault = () => {
-
+const { data } = useGetAllVaults();
+  useEffect(() => {
+    console.log(data)
+  }, [data]);
     return (
         <div className="p-4">
             <div>
                 <h1 className="text-3xl font-bold">Your Vault</h1>
-                <p className="text-gray-400 text-sm">Manage your token distribution vaults</p>
+          <p className="text-gray-400 text-sm">Manage your token distribution vaults</p>
+                    <CreateVaultModal />
+
             </div>
-       <Empty className="border-4 mt-5">
+        {data && data.length > 0 ? (
+          <UserVaults />
+      ): <Empty className="border-4 mt-5">
       <EmptyHeader>
         <EmptyMedia variant="icon">
           <VaultIcon />
@@ -44,7 +53,7 @@ const CreateVault = () => {
         size="sm"
       >
       </Button>
-    </Empty>
+    </Empty>}
    </div>
     );
   }

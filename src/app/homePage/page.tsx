@@ -7,7 +7,7 @@ const HomePage = () => {
       <span className='text-5xl font-bold '>KLOUW</span>
       <Link className='hover:underline' href="/splitter">Go to App</Link>
     </div>
-  )
+  ) 
 }
 
 export default HomePage

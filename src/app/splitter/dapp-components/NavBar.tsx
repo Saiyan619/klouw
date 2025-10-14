@@ -1,7 +1,6 @@
  "use client"
 import React from 'react'   
 import Link from "next/link"
-import { Wallet, Wallet2 } from "lucide-react"
 import { WalletButton } from '@/app/WalletButton'
 
 
@@ -17,7 +16,7 @@ const NavBar = () => {
           <span className="text-xl font-semibold">Klouwso</span>
         </Link>
 
-        <nav className="hidden items-center gap-6 md:flex">
+        {/* <nav className="hidden items-center gap-6 md:flex">
           <Link
             href="#features"
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
@@ -36,7 +35,7 @@ const NavBar = () => {
           >
             Launch App
           </Link>
-        </nav>
+        </nav> */}
 
           <WalletButton />
 
