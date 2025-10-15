@@ -51,7 +51,6 @@ export const useDepositVault = () => {
                 userAddressPubkey
             );
 
-            // Use .transaction() instead of .rpc() to get the transaction first
             const transaction = await program.methods.depositVault(new BN(amount)).accounts({
                 vaultInfo: vaultInfoPDA,
                 vaultTokenAcc: vaultTokenAccPDA,

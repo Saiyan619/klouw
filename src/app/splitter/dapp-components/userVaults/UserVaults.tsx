@@ -1,6 +1,6 @@
 import { useGetAllVaults } from '@/app/hooks/get-vault-hook'
 import { Button } from '@/components/ui/button';
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import {
   Card,
   CardAction,
@@ -19,27 +19,15 @@ import { SplitAndShareModal } from '../splitNshare/components/SplitAndShareModal
 
 const UserVaults = () => {
     const { data, refetch } = useGetAllVaults();
-    useEffect(() => {
-      refreshVault();
-    }, [])
+  const refreshVault = useCallback(() => {
+  refetch();
+}, [refetch]);
 
-    
-
-     //         publicKey: vault.publicKey.toBase58(),
-            //         owner: vault.account.owner.toBase58(),
-            //         amount: vault.account.amount.toString(),
-            //         mint: vault.account.mint.toBase58(),
-            //         vaultInfoBump: vault.account.vaultInfoBump,
-            //         vaultTokenBump: vault.account.vaultTokenBump,
-            //         createdAt: new Date(vault.account.createdAt.toNumber() * 1000),
-    
-    const refreshVault = async () => {
-      refetch();
-    }
+useEffect(() => {
+  refreshVault(); // Runs once on mount
+}, [refreshVault]); // ← Stable dependency
   return (
     <div>
-          {/* <Button onClick={getUSDCTokenVault}>Get USdc vault details</Button> */}
-
       <div className='p-4'>
         <Button onClick={refreshVault}>Refresh Vaults</Button>
               {data?.map((vault) => {

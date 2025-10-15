@@ -120,7 +120,7 @@ export const useGetAllVaults = () => {
         }
         try {
             const provider = new AnchorProvider(connection, wallet, { commitment: "confirmed" });
-            const program = new Program<TokenSplitter>(idl as any, provider);
+            const program = new Program<TokenSplitter>(idl as TokenSplitter, provider);
             const userAddressPubkey = publicKey;
             // Fetch all vault accounts owned by this user
             const allVaults = await program.account.vaultInfo.all([
