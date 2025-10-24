@@ -4,6 +4,7 @@ import "@solana/wallet-adapter-react-ui/styles.css";
 import type { Metadata } from "next";
 import { SolanaProvider } from "@/app/provider/Solana";
 import { QueryProvider } from "./provider/QueryProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 // import { Toaster } from "sonner";
 
@@ -23,7 +24,8 @@ export default function RootLayout({
       <body>
         <SolanaProvider>
           <QueryProvider>
-      {children}
+            {children}
+                    <Toaster />
     </QueryProvider>
               </SolanaProvider>
       </body>

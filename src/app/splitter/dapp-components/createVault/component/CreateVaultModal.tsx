@@ -34,7 +34,7 @@ const tokens: Token[] = [
 ]
 
 const CreateVaultModal: React.FC = () => {
-  const { InitializeVault } = useInitializeVault();
+  const { initializeNewVault, isPending } = useInitializeVault();
   const [selectedToken, setSelectedToken] = useState<string | null>(null)
 
   return (
@@ -99,8 +99,8 @@ const CreateVaultModal: React.FC = () => {
             <Button variant="outline" type="button">Cancel</Button>
           </DialogClose>
           {/* <Button onClick={handleSubmit} disabled={!selectedToken}> */}
-          <Button onClick={()=> InitializeVault({mintAddress: tokens.find(t => t.id === selectedToken)?.mint || ""})} disabled={!selectedToken}>
-            Create Vault
+          <Button onClick={()=> initializeNewVault({mintAddress: tokens.find(t => t.id === selectedToken)?.mint || ""})} disabled={!selectedToken || isPending}>
+          {isPending ? "Loading..." :"Create Vault"}
           </Button>
         </DialogFooter>
       </DialogContent>

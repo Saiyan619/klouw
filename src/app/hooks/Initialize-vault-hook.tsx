@@ -3,6 +3,8 @@ import { useAnchorWallet, useConnection, useWallet } from '@solana/wallet-adapte
 import idl from '@/app/anchor-idl/idl.json';
 import { PublicKey, SystemProgram } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 interface InitializeVaultParams {
     mintAddress: string;
@@ -106,5 +108,24 @@ export const useInitializeVault = () => {
 
     }
 
-    return { InitializeVault };
+    const { mutateAsync: initializeNewVault, data, isPending, isSuccess, isError } = useMutation({
+        mutationFn: InitializeVault,
+        onSuccess: (data:any) => {
+            // 'data' contains what you returned from InitializeVault function
+            toast.success("Vault Created Successfully!", {
+                description: `Transaction: ${data.signature}`,
+                // Or use a Solana explorer link:
+                action: {
+                    label: "View on Explorer",
+                    onClick: () => window.open(`https://explorer.solana.com/tx/${data.signature}?cluster=devnet`, '_blank')
+                }
+            });
+        },
+        onError: (error) => {
+           
+            toast.error(`Failed to create vault. Please try again.: ${error.message}`);
+        }
+    });
+
+    return { initializeNewVault, data, isPending, isSuccess, isError };
 };
