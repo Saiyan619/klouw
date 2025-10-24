@@ -15,12 +15,11 @@ export const useInitializeVault = () => {
     const { connection } = useConnection();
     const wallet = useAnchorWallet();
 
-    const InitializeVault = async ({ mintAddress }: InitializeVaultParams) => {
+    const InitializeVault = async ({ mintAddress }: InitializeVaultParams): Promise<string> => {
         console.log("Mint Address Input:", mintAddress);
         
         if (!wallet || !publicKey) {
-            console.error("Wallet is not connected!!");
-            return;
+            throw new Error("Wallet is not connected!!");
         }
 
         try {
@@ -81,18 +80,13 @@ export const useInitializeVault = () => {
             const err = error as Error & {
                 logs?: string[];
                 message?: string;
-                code: string;
             };
 
-             if (err.message?.includes("already been processed")) {
-                console.warn("Transaction already processed (duplicate call ignored)");
-                return "success"; // Return success since it actually worked
-            }
-    
             console.error("Error Message:", err.message);
 
             // Handle harmless client-side errors that shouldn't break the UI
             const safeErrors = [
+                "already been processed",
                 "This transaction already been processed",
             ];
 
@@ -100,7 +94,7 @@ export const useInitializeVault = () => {
                 console.warn(
                     "Non-critical transaction warning — likely a duplicate simulation or post-send issue."
                 );
-                return;
+                return "success"; // Return a success indicator string
             }
 
             throw error;
@@ -110,19 +104,17 @@ export const useInitializeVault = () => {
 
     const { mutateAsync: initializeNewVault, data, isPending, isSuccess, isError } = useMutation({
         mutationFn: InitializeVault,
-        onSuccess: (data:any) => {
-            // 'data' contains what you returned from InitializeVault function
+        onSuccess: (data: string) => {
+            // 'data' is the transaction signature string from InitializeVault
             toast.success("Vault Created Successfully!", {
-                description: `Transaction: ${data.signature}`,
-                // Or use a Solana explorer link:
+                description: `Transaction: ${data}`,
                 action: {
                     label: "View on Explorer",
-                    onClick: () => window.open(`https://explorer.solana.com/tx/${data.signature}?cluster=devnet`, '_blank')
+                    onClick: () => window.open(`https://explorer.solana.com/tx/${data}?cluster=devnet`, '_blank')
                 }
             });
         },
-        onError: (error) => {
-           
+        onError: (error: Error) => {
             toast.error(`Failed to create vault. Please try again.: ${error.message}`);
         }
     });
