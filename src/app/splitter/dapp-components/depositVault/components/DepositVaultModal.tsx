@@ -20,7 +20,7 @@ interface ChildComponentProps {
 }
 
 const DepositVaultModal = ({ mint }: ChildComponentProps) => {
-    const { depositVault } = useDepositVault();
+    const { depositToVault, isPending } = useDepositVault();
     const [amount, setAmount] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     
@@ -33,7 +33,7 @@ const DepositVaultModal = ({ mint }: ChildComponentProps) => {
         
         setIsLoading(true);
         try {
-            await depositVault({ mintAddress: mint, amount: parseInt(amount) });
+            await depositToVault({ mintAddress: mint, amount: parseInt(amount) });
             // Success - you might want to close the dialog or show a success message
             setAmount(''); // Reset the amount
         } catch (error) {
@@ -79,8 +79,8 @@ const DepositVaultModal = ({ mint }: ChildComponentProps) => {
                                 Cancel
                             </Button>
                         </DialogClose>
-                        <Button onClick={handleDeposit} disabled={isLoading || !amount}>
-                            {isLoading ? "Processing..." : "Deposit Vault"}
+                        <Button onClick={handleDeposit} disabled={isPending || !amount}>
+                            {isPending ? "Funding Vault..." : "Deposit Vault"}
                         </Button>
                     </DialogFooter>
                 </DialogContent>

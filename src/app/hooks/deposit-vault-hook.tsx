@@ -3,6 +3,8 @@ import { useAnchorWallet, useConnection, useWallet } from '@solana/wallet-adapte
 import idl from '@/app/anchor-idl/idl.json';
 import { PublicKey, SystemProgram } from "@solana/web3.js";
 import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
 
 interface DepositVaultParams {
     mintAddress: string;
@@ -14,10 +16,9 @@ export const useDepositVault = () => {
     const { connection } = useConnection();
     const wallet = useAnchorWallet();
     
-    const depositVault = async ({mintAddress, amount}: DepositVaultParams) => {
+    const depositVault = async ({mintAddress, amount}: DepositVaultParams):Promise<string> => {
         if (!wallet || !publicKey) {
-            console.error("Wallet not connected");
-            return;
+            throw new Error("Wallet not conneted");
         }
 
         try {
@@ -78,6 +79,23 @@ export const useDepositVault = () => {
     throw error; 
 }
     }
+     const { mutateAsync: depositToVault, data, isPending, isSuccess, isError } = useMutation({
+            mutationFn: depositVault,
+            onSuccess: (data: string) => {
+                // 'data' is the transaction signature string from InitializeVault
+                toast.success("Funds Deposited Successfully!", {
+                    description: `Transaction: ${data}`,
+                    action: {
+                        label: "View on Explorer",
+                        onClick: () => window.open(`https://explorer.solana.com/tx/${data}?cluster=devnet`, '_blank')
+                    }
+                });
+            },
+            onError: (error: Error) => {
+                toast.error(`Failed to deposit funds. Please try again.: ${error.message}`);
+            }
+        });
+    
 
-    return { depositVault };
+    return { depositToVault, data, isPending, isSuccess, isError };
 }
