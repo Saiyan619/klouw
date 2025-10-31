@@ -59,13 +59,13 @@ useEffect(() => {
 </span>
     </div>
 
-                     <div className='flex justify-between'>
+                     {/* <div className='flex justify-between'>
                       <span>Mint:</span>
                       <span>{vault.account.mint.toBase58()}</span>
-                  </div>
+                  </div> */}
                   
       </CardContent>
-    <CardFooter className="flex gap-2 p-4"> {/* Ensure padding and gap */}
+    <CardFooter className="flex gap-2 p-4 flex-wrap items-center"> {/* Ensure padding and gap */}
                     <DepositVaultModal mint={vault.account.mint.toBase58()} />
     <SplitAndShareModal mint={vault.account.mint.toBase58()} />
 

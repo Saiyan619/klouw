@@ -45,10 +45,10 @@ const DepositVaultModal = ({ mint }: ChildComponentProps) => {
     }
 
     return (
-        <div>
+    <div className="w-full md:w-auto">
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button variant="outline">Deposit Vault</Button>
+                    <Button className='w-full' variant="outline">Deposit Vault</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>

@@ -46,8 +46,8 @@ export function SplitAndShareModal({mint}:ChildComponentProps) {
   }
 
   return (
-    <div>
-      <Button onClick={() => setOpen(true)}>
+    <div className="w-full md:w-auto">
+      <Button className="w-full" onClick={() => setOpen(true)}>
         <Send className="h-4 w-4 mr-2" />
         Split & Share
       </Button>

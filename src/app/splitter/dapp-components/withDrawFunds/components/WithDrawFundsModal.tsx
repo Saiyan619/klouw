@@ -23,10 +23,10 @@ const WithDrawFundsModal = ({mint}:ChildComponentProps) => {
         withdrawFunds(mint)
     };
   return (
-    <div>
+    <div className="w-full md:w-auto">
       <AlertDialog>
             <AlertDialogTrigger asChild>
-                        <Button>Wtihdraw Funds</Button>
+                        <Button className='w-full'>Wtihdraw Funds</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

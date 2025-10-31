@@ -23,10 +23,10 @@ const CloseVaultModal = ({ mint }: ChildComponentProps) => {
     closeVault(mint);
   }
   return (
-    <div>
+    <div className="w-full md:w-auto">
       <AlertDialog>
             <AlertDialogTrigger asChild>
-                  <Button>Close Account</Button>
+                  <Button className='w-full'>Close Account</Button>
   </AlertDialogTrigger>
   <AlertDialogContent>
     <AlertDialogHeader>
