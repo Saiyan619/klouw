@@ -12,7 +12,7 @@ interface DepositVaultParams {
 }
 
 export const useDepositVault = () => {
-    const { publicKey } = useWallet();
+    const { publicKey, sendTransaction } = useWallet();
     const { connection } = useConnection();
     const wallet = useAnchorWallet();
     
@@ -60,11 +60,13 @@ export const useDepositVault = () => {
                 mint: mintAddressPubkey,
                 tokenProgram: TOKEN_PROGRAM_ID,
                 systemProgram: SystemProgram.programId,
-            }).rpc()
-            
-            console.log("Deposited successfully", transaction);
-            return transaction;
+            }).transaction();
 
+const signature = await sendTransaction(transaction, connection);
+
+await connection.confirmTransaction(signature, 'confirmed');
+            return signature;
+            
         }catch (error: unknown) {
     const err = error as Error & { 
         message?: string 
