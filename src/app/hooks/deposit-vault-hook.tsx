@@ -12,7 +12,7 @@ interface DepositVaultParams {
 }
 
 export const useDepositVault = () => {
-    const { publicKey, sendTransaction } = useWallet();
+    const { publicKey } = useWallet();
     const { connection } = useConnection();
     const wallet = useAnchorWallet();
     
