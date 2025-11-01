@@ -20,6 +20,7 @@ interface ChildComponentProps {
 }
 
 const DepositVaultModal = ({ mint }: ChildComponentProps) => {
+
     const { depositToVault, isPending } = useDepositVault();
     const [amount, setAmount] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);

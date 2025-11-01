@@ -52,28 +52,18 @@ export const useDepositVault = () => {
                 userAddressPubkey
             );
 
-          const transaction = await program.methods
-  .depositVault(new BN(amount))
-  .accounts({
-    vaultInfo: vaultInfoPDA,
-    vaultTokenAcc: vaultTokenAccPDA,
-    userTokenAcc: userTokenAcc,
-    signer: userAddressPubkey,
-    mint: mintAddressPubkey,
-    tokenProgram: TOKEN_PROGRAM_ID,
-    systemProgram: SystemProgram.programId,
-  })
-  .transaction();
-
-const { blockhash } = await connection.getLatestBlockhash();
-
-transaction.recentBlockhash = blockhash;
-transaction.feePayer = publicKey;
-
-const signature = await sendTransaction(transaction, connection);
-
-await connection.confirmTransaction(signature, 'confirmed');
-return signature;
+            const transaction = await program.methods
+                .depositVault(new BN(amount))
+                .accounts({
+                    vaultInfo: vaultInfoPDA,
+                    vaultTokenAcc: vaultTokenAccPDA,
+                    userTokenAcc: userTokenAcc,
+                    signer: userAddressPubkey,
+                    mint: mintAddressPubkey,
+                    tokenProgram: TOKEN_PROGRAM_ID,
+                    systemProgram: SystemProgram.programId,
+                }).rpc();
+return transaction;
         }catch (error: unknown) {
     const err = error as Error & { 
         message?: string 
