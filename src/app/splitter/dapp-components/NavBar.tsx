@@ -13,7 +13,7 @@ const NavBar = () => {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
             <span className="font-mono text-lg font-bold text-primary-foreground">K</span>
           </div>
-          <span className="text-xl font-semibold">Klouwso</span>
+          <span className="text-xl font-semibold">Klouw 1</span>
         </Link>
 
         {/* <nav className="hidden items-center gap-6 md:flex">

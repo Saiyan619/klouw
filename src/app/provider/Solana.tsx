@@ -8,12 +8,9 @@ import {
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { clusterApiUrl } from "@solana/web3.js";
-import {
-  SolanaMobileWalletAdapter,
-  createDefaultAddressSelector,
-  createDefaultAuthorizationResultCache,
-  createDefaultWalletNotFoundHandler,
-} from '@solana-mobile/wallet-adapter-mobile';
+
+import '@/app/wallet-config';
+
 // Import the wallet adapter styles
 import "@solana/wallet-adapter-react-ui/styles.css";
 
@@ -27,22 +24,7 @@ export const SolanaProvider: FC<SolanaProviderProps> = ({ children }) => {
 
   // You can also provide a custom RPC endpoint
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-
-const wallets = [
-  new SolanaMobileWalletAdapter({
-    appIdentity: {
-      name: 'Klouw',
-      uri: 'https://klouw.vercel.app',
-      icon: 'https://klouw.vercel.app/favicon.ico',
-    },
-    addressSelector: createDefaultAddressSelector(),
-    authorizationResultCache: createDefaultAuthorizationResultCache(),
-    chain: 'devnet',
-    onWalletNotFound: async (_mobileWalletAdapter) => {
-      console.log('No wallet found');
-    },
-  }),
-];
+const wallets = useMemo(() => [], []);
   return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets} autoConnect>
