@@ -37,8 +37,10 @@ const wallets = [
     },
     addressSelector: createDefaultAddressSelector(),
     authorizationResultCache: createDefaultAuthorizationResultCache(),
-    cluster: 'mainnet-beta',
-    onWalletNotFound: createDefaultWalletNotFoundHandler(),
+    chain: 'devnet',
+    onWalletNotFound: async (_mobileWalletAdapter) => {
+      console.log('No wallet found');
+    },
   }),
 ];
   return (
