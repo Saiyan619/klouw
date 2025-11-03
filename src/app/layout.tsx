@@ -11,7 +11,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Klouw",
-  description: "A Defi Token Splitter on Solana",
+  description: "Share tokens to multiple addresses instantly on Solana",
 };
 
 export default function RootLayout({

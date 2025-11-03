@@ -12,7 +12,7 @@ interface ChildComponentProps {
 }
 
 export function SplitAndShareModal({mint}:ChildComponentProps) {
-  const { splitAndShare } = useSplitAndShare();
+  const { SplitnShare, isPending } = useSplitAndShare();
   const [open, setOpen] = useState(false)
   const [addresses, setAddresses] = useState<string[]>([])
   const [currentAddress, setCurrentAddress] = useState("")
@@ -31,7 +31,7 @@ export function SplitAndShareModal({mint}:ChildComponentProps) {
   const handleShare = () => {
     console.log("Sharing to addresses:", addresses)
     // TODO: Add your share logic here
-    splitAndShare({
+    SplitnShare({
       mintAddress: mint,
       receipients:addresses
 })
@@ -110,12 +110,12 @@ export function SplitAndShareModal({mint}:ChildComponentProps) {
           </div>
 
           <DialogFooter>
-            <Button variant="outline" onClick={() => setOpen(false)}>
+            <Button variant="outline" disabled={isPending} onClick={() => setOpen(false)}>
               Cancel
             </Button>
             <Button onClick={handleShare} disabled={addresses.length === 0}>
               <Send className="h-4 w-4 mr-2" />
-              Share to {addresses.length} {addresses.length === 1 ? "Address" : "Addresses"}
+             {isPending ? "processing" : "Split and Share to"} {addresses.length} {addresses.length === 1 ? "Address" : "Addresses"}
             </Button>
           </DialogFooter>
         </DialogContent>

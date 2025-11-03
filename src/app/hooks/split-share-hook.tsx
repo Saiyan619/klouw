@@ -3,6 +3,8 @@ import { useAnchorWallet, useConnection, useWallet } from '@solana/wallet-adapte
 import idl from '@/app/anchor-idl/idl.json';
 import { PublicKey, SystemProgram } from "@solana/web3.js";
 import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 interface SplitAndShareParams{
     mintAddress: string;
@@ -14,10 +16,9 @@ export const useSplitAndShare = () => {
     const { connection } = useConnection();
     const wallet = useAnchorWallet();
 
-    const splitAndShare = async ({mintAddress, receipients}: SplitAndShareParams) => {
+    const splitAndShare = async ({mintAddress, receipients}: SplitAndShareParams):Promise<string> => {
         if (!wallet || !publicKey) {
-            console.error("wallet not connected!!!")
-            return;
+            throw new Error("wallet not connected!!!");
         }
 
         try {
@@ -109,7 +110,25 @@ export const useSplitAndShare = () => {
                 return "success"; // Return success since it actually worked
             }
             console.error(error);
+             throw error;
         }
     }
-    return { splitAndShare };
+
+   const { mutateAsync:SplitnShare, isPending} = useMutation({
+          mutationFn: splitAndShare,
+          onSuccess: (data: string) => {
+                                  // 'data' is the transaction signature string from InitializeVault
+                                  toast.success("Vault Closed Successfully!", {
+                                      description: `Transaction: ${data}`,
+                                      action: {
+                                          label: "View on Explorer",
+                                          onClick: () => window.open(`https://explorer.solana.com/tx/${data}?cluster=devnet`, '_blank')
+                                      }
+                                  });
+                              },
+                              onError: (error: Error) => {
+                                  toast.error(`Failed to Close Vault. Please try again.: ${error.message}`);
+                              }
+      })
+    return { SplitnShare, isPending };
 }

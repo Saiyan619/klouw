@@ -22,7 +22,7 @@ const { data } = useGetAllVaults();
   }, [data]);
     return (
         <div className="p-4">
-            <div>
+            <div className="ml-3">
                 <h1 className="text-3xl font-bold">Your Vault</h1>
           <p className="text-gray-400 text-sm">Manage your token distribution vaults</p>
                     <CreateVaultModal />

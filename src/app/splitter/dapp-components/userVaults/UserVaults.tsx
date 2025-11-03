@@ -24,15 +24,15 @@ const UserVaults = () => {
 }, [refetch]);
 
 useEffect(() => {
-  refreshVault(); // Runs once on mount
-}, [refreshVault]); // ← Stable dependency
+  refreshVault(); 
+}, [refreshVault]); 
   return (
     <div>
       <div className='p-4'>
         <Button onClick={refreshVault}>Refresh Vaults</Button>
               {data?.map((vault) => {
               return(
-                              <Card key={vault.publicKey.toString()}>
+                              <Card className='mt-3' key={vault.publicKey.toString()}>
             <CardHeader>
         <CardTitle>
                               <span className='text-3xl'>{vault.account.amount.toString()} USDC</span>

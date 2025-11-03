@@ -5,7 +5,7 @@ import React from 'react'
 const HomePage = () => {
   return (
     <div className="relative min-h-screen bg-white overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.08]">
+      <div className="absolute inset-0 opacity-[0.09]">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="absolute inset-0">
           <defs>
             <pattern id="hexagons" width="80" height="80" patternUnits="userSpaceOnUse">
@@ -38,7 +38,7 @@ const HomePage = () => {
           </div>
 
           {/* Main heading */}
-          <h1 className="text-balance text-6xl sm:text-7xl font-bold text-slate-900 mb-6 tracking-tight leading-tight">
+          <h1 className="text-balance text-3xl sm:text-7xl font-bold text-slate-900 mb-6 tracking-tight leading-tight">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600">
               Token Splitting
             </span>{" "}
@@ -52,6 +52,8 @@ const HomePage = () => {
           </p>
 
           {/* Features grid */}
+                      <h2 className='text-xl font-bold mb-3'>How it works</h2>
+
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 max-w-3xl mx-auto">
             {/* Create Vault */}
             <div className="group relative px-6 py-6 rounded-2xl bg-gradient-to-b from-white/80 to-white/40 border border-blue-200/30 backdrop-blur-sm hover:border-blue-300/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-100/20">
@@ -85,19 +87,18 @@ const HomePage = () => {
           </div>
 
           {/* CTA Button */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link className='hover:underline' href="/splitter">
-            <button
-              className="relative px-8 py-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold text-lg shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 group"
-            >
-              Launch Klouw DApp
-             
-            </button>
-            <button className="px-8 py-4 rounded-full border-2 border-slate-300 text-slate-900 font-semibold text-lg hover:bg-slate-50 hover:border-slate-400 transition-all duration-300 bg-white/50 backdrop-blur-sm">
-              Documentation
-            </button>
-            </Link>
-          </div>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
+  <Link className='hover:underline' href="/splitter">
+    <button
+      className="relative px-8 py-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold text-lg shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 group"
+    >
+      Launch Klouw DApp
+    </button>
+  </Link>
+  <button className="px-8 py-4 rounded-full border-2 border-slate-300 text-slate-900 font-semibold text-lg hover:bg-slate-50 hover:border-slate-400 transition-all duration-300 bg-white/50 backdrop-blur-sm">
+    Documentation
+  </button>
+</div>
         </div>
       </div>
     </div>

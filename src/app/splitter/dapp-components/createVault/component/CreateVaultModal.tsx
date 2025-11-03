@@ -28,7 +28,7 @@ interface Token {
 }
 
 const tokens: Token[] = [
-  { id: 'usdc', name: 'USDC', symbol: 'USDC', image: "/usd-coin-usdc-logo.png", color: 'bg-blue-500', mint: 'Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr' },
+  { id: 'usdc', name: 'USDC(devnet)', symbol: 'USDC', image: "/usd-coin-usdc-logo.png", color: 'bg-blue-500', mint: 'Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr' },
   { id: 'bonk', name: 'BONK', symbol: 'BONK', image: "/bonk1-bonk-logo.png", color: 'bg-orange-500', mint: 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263', disabled: true },
   { id: 'usdt', name: 'USDT', symbol: 'USDT', image: "/tether-usdt-logo.png", color: 'bg-green-500', mint: 'EJwZgeZrdC8TXTQbQBoL6bfuAnFUUy1PVCMB4DYPzVaS', disabled: true },
   { id: 'sol', name: 'SOL', symbol: 'SOL', image: "/solana-sol-logo.png", color: 'bg-purple-500', mint: 'So11111111111111111111111111111111111111112', disabled: true }
@@ -54,7 +54,7 @@ const CreateVaultModal: React.FC = () => {
         <div className="grid gap-4 py-4">
           
           <div className="grid gap-3">
-            <Label>Select Token (Mint Address)</Label>
+            <Label>Select Token</Label>
             <div className="grid grid-cols-2 gap-3">
               {tokens.map((token) => (
                 <Card
@@ -94,14 +94,7 @@ const CreateVaultModal: React.FC = () => {
               ))}
             </div>
             
-            {selectedToken && (
-              <div className="mt-2 p-2 bg-slate-100 rounded text-xs">
-                <span className="font-medium">Mint: </span>
-                <span className="text-slate-600 break-all">
-                  {tokens.find(t => t.id === selectedToken)?.mint}
-                </span>
-              </div>
-            )}
+           
             
             <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-md">
               <p className="text-xs text-slate-600">

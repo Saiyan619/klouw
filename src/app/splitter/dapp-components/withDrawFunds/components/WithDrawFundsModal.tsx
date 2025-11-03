@@ -29,7 +29,7 @@ const WithDrawFundsModal = ({mint}:ChildComponentProps) => {
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-[425px]">
                           <DialogHeader>
-                              <DialogTitle>Deposit Vault</DialogTitle>
+                              <DialogTitle>Withdraw Funds</DialogTitle>
                               <DialogDescription>
                                   Are you absolutely sure?. This action cannot be undone.
                               </DialogDescription>
