@@ -151,7 +151,6 @@ export const useGetAllVaults = () => {
             // });
 
             const data = allVaults;
-            console.log(data);
             return data;
 
         } catch (error) {

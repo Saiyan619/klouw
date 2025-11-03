@@ -50,22 +50,21 @@ const CreateVaultModal: React.FC = () => {
             Connect your wallet to create a new Vault
           </DialogDescription>
         </DialogHeader>
-        
+
         <div className="grid gap-4 py-4">
-          
+
           <div className="grid gap-3">
             <Label>Select Token</Label>
             <div className="grid grid-cols-2 gap-3">
               {tokens.map((token) => (
                 <Card
                   key={token.id}
-                  className={`relative cursor-pointer transition-all duration-150 ${
-                    token.disabled 
-                      ? 'opacity-50 cursor-not-allowed bg-slate-100' 
+                  className={`relative cursor-pointer transition-all duration-150 ${token.disabled
+                      ? 'opacity-50 cursor-not-allowed bg-slate-100'
                       : selectedToken === token.id
                         ? 'ring-2 ring-blue-500 bg-blue-50 hover:shadow-md'
                         : 'hover:bg-slate-50 hover:shadow-md'
-                  }`}
+                    }`}
                   onClick={() => !token.disabled && setSelectedToken(token.id)}
                 >
                   <div className="p-4 flex flex-col items-center justify-center">
@@ -74,17 +73,17 @@ const CreateVaultModal: React.FC = () => {
                         <Lock className="w-3 h-3 text-white" />
                       </div>
                     )}
-                    
+
                     {selectedToken === token.id && !token.disabled && (
                       <div className="absolute top-2 right-2 bg-blue-500 rounded-full p-0.5">
                         <Check className="w-3 h-3 text-white" />
                       </div>
                     )}
-                    
+
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-2`}>
-                      <Image src={token.image} width={100} height={100} alt='icon'/>
+                      <Image src={token.image} width={100} height={100} alt='icon' />
                     </div>
-                    
+
                     <span className="font-semibold text-sm">{token.name}</span>
                     {token.disabled && (
                       <span className="text-xs text-slate-500 mt-1">Coming Soon</span>
@@ -93,9 +92,9 @@ const CreateVaultModal: React.FC = () => {
                 </Card>
               ))}
             </div>
-            
-           
-            
+
+
+
             <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-md">
               <p className="text-xs text-slate-600">
                 <span className="font-semibold">Note:</span> Additional tokens (BONK, USDT, SOL) will be available in future updates.
@@ -103,13 +102,13 @@ const CreateVaultModal: React.FC = () => {
             </div>
           </div>
         </div>
-        
+
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="outline" type="button">Cancel</Button>
           </DialogClose>
-          <Button 
-            onClick={() => initializeNewVault({mintAddress: tokens.find(t => t.id === selectedToken)?.mint || ""})} 
+          <Button
+            onClick={() => initializeNewVault({ mintAddress: tokens.find(t => t.id === selectedToken)?.mint || "" })}
             disabled={!selectedToken || isPending}
           >
             {isPending ? "Loading..." : "Create Vault"}

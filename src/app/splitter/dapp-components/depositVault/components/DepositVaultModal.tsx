@@ -2,21 +2,21 @@
 import React, { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Input } from '@/components/ui/input'
 import { useDepositVault } from '@/app/hooks/deposit-vault-hook'
 
 interface ChildComponentProps {
-  mint: string;
+    mint: string;
 }
 
 const DepositVaultModal = ({ mint }: ChildComponentProps) => {
@@ -24,7 +24,7 @@ const DepositVaultModal = ({ mint }: ChildComponentProps) => {
     const { depositToVault, isPending } = useDepositVault();
     const [amount, setAmount] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    
+
     const handleDeposit = async () => {
         if (!amount || parseInt(amount) <= 0) {
             alert("Please enter a valid amount");
@@ -37,11 +37,11 @@ const DepositVaultModal = ({ mint }: ChildComponentProps) => {
         } catch (error) {
             console.error("Deposit failed:", error);
             // Handle error in UI (show toast, alert, etc.)
-        } 
+        }
     }
 
     return (
-    <div className="w-full md:w-auto">
+        <div className="w-full md:w-auto">
             <Dialog>
                 <DialogTrigger asChild>
                     <Button className='w-full' variant="outline">Deposit Vault</Button>
@@ -53,7 +53,7 @@ const DepositVaultModal = ({ mint }: ChildComponentProps) => {
                             Connect your wallet to create a new Vault
                         </DialogDescription>
                     </DialogHeader>
-                
+
                     <div className="grid gap-4 py-4">
                         <div className="space-y-2">
                             <Label htmlFor="amount">Amount</Label>
@@ -68,7 +68,7 @@ const DepositVaultModal = ({ mint }: ChildComponentProps) => {
                             <p className="text-sm text-muted-foreground">Enter the amount of tokens to deposit</p>
                         </div>
                     </div>
-                    
+
                     <DialogFooter>
                         <DialogClose asChild>
                             <Button variant="outline" type="button" disabled={isPending}>

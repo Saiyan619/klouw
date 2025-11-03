@@ -104,6 +104,5 @@ const HomePage = () => {
     </div>
   ) 
 }
-      // <Link className='hover:underline' href="/splitter">Go to App</Link>
 
 export default HomePage

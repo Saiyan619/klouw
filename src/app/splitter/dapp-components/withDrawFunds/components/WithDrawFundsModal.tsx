@@ -16,37 +16,37 @@ interface ChildComponentProps {
   mint: string;
 }
 
-const WithDrawFundsModal = ({mint}:ChildComponentProps) => {
-    const { withdraw, isPending } = useWithDrawFunds();
-    const handleWithdrawFunds = () => {
-        withdraw(mint)
-    };
+const WithDrawFundsModal = ({ mint }: ChildComponentProps) => {
+  const { withdraw, isPending } = useWithDrawFunds();
+  const handleWithdrawFunds = () => {
+    withdraw(mint)
+  };
   return (
     <div className="w-full md:w-auto">
-        <Dialog>
-                      <DialogTrigger asChild>
-                          <Button className='w-full'>Withdraw Funds</Button>
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-[425px]">
-                          <DialogHeader>
-                              <DialogTitle>Withdraw Funds</DialogTitle>
-                              <DialogDescription>
-                                  Are you absolutely sure?. This action cannot be undone.
-                              </DialogDescription>
-                          </DialogHeader>
-                          
-                          <DialogFooter>
-                              <DialogClose asChild>
-                                  <Button variant="outline" type="button" disabled={isPending}>
-                                      Cancel
-                                  </Button>
-                              </DialogClose>
-                              <Button onClick={handleWithdrawFunds} disabled={isPending}>
-                                          {isPending ? "Withdrawing..." : "Withdraw Funds"}
-                              </Button>
-                          </DialogFooter>
-                      </DialogContent>
-                  </Dialog>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button className='w-full'>Withdraw Funds</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Withdraw Funds</DialogTitle>
+            <DialogDescription>
+              Are you absolutely sure?. This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline" type="button" disabled={isPending}>
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button onClick={handleWithdrawFunds} disabled={isPending}>
+              {isPending ? "Withdrawing..." : "Withdraw Funds"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

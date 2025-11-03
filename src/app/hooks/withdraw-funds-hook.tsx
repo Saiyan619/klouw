@@ -7,12 +7,12 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 
-export const useWithDrawFunds = ()=>{
+export const useWithDrawFunds = () => {
     const wallet = useAnchorWallet();
     const { connection } = useConnection();
     const { publicKey } = useWallet();
 
-    const withdrawFunds = async (mintAddress: string):Promise<string> => {
+    const withdrawFunds = async (mintAddress: string): Promise<string> => {
         if (!wallet || !publicKey) {
             throw new Error("wallet not connected");
         }
@@ -21,7 +21,7 @@ export const useWithDrawFunds = ()=>{
             const provider = new AnchorProvider(connection, wallet, { commitment: "confirmed" });
             const programId = new PublicKey(idl.address);
             const program = new Program(idl, provider);
-            
+
             const mintAddressPubkey = new PublicKey(mintAddress);
             const userAddressPubkey = publicKey;
 
@@ -59,38 +59,37 @@ export const useWithDrawFunds = ()=>{
             const txSig = await provider.sendAndConfirm(tx);
             console.log("Withdraw Successful", txSig);
             return txSig;
-            }catch (error: unknown) {
-    const err = error as Error & { 
-        message?: string 
-    };
-    
-    if (err.message?.includes("already been processed")) {
-        console.warn("Transaction was already processed - this might be a false error");
-        // If you know the transaction succeeded, you might want to return a success status
-        return "Transaction completed (already processed)";
-    }
+        } catch (error: unknown) {
+            const err = error as Error & {
+                message?: string
+            };
+
+            if (err.message?.includes("already been processed")) {
+                console.warn("Transaction was already processed - this might be a false error");
+                // If you know the transaction succeeded, you might want to return a success status
+                return "Transaction completed (already processed)";
+            }
             console.error("Withdraw Error", error);
             throw error;
         }
 
     }
 
-    const { mutateAsync:withdraw, isPending } = useMutation({
+    const { mutateAsync: withdraw, isPending } = useMutation({
         mutationFn: withdrawFunds,
         onSuccess: (data: string) => {
-                        // 'data' is the transaction signature string from InitializeVault
-                        toast.success("Funds Withdrawn Successfully!", {
-                            description: `Transaction: ${data}`,
-                            action: {
-                                label: "View on Explorer",
-                                onClick: () => window.open(`https://explorer.solana.com/tx/${data}?cluster=devnet`, '_blank')
-                            }
-                        });
-                    },
-                    onError: (error: Error) => {
-                        toast.error(`Failed to Withdraw funds. Please try again.: ${error.message}`);
-                    }
+            toast.success("Funds Withdrawn Successfully!", {
+                description: `Transaction: ${data}`,
+                action: {
+                    label: "View on Explorer",
+                    onClick: () => window.open(`https://explorer.solana.com/tx/${data}?cluster=devnet`, '_blank')
+                }
+            });
+        },
+        onError: (error: Error) => {
+            toast.error(`Failed to Withdraw funds. Please try again.: ${error.message}`);
+        }
     })
 
-    return { withdraw, isPending  };
+    return { withdraw, isPending };
 }
