@@ -18,7 +18,7 @@ import UserVaults from "../userVaults/UserVaults";
 const CreateVault = () => {
 const { data } = useGetAllVaults();
   useEffect(() => {
-    console.log(data)
+    data;
   }, [data]);
     return (
         <div className="p-4">

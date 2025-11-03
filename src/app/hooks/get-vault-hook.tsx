@@ -132,8 +132,8 @@ export const useGetAllVaults = () => {
                 }
             ]);
 
-            console.log("Fetching all vaults for user:", userAddressPubkey.toBase58());
-            console.log(`Found ${allVaults.length} vault(s)`);
+            // console.log("Fetching all vaults for user:", userAddressPubkey.toBase58());
+            // console.log(`Found ${allVaults.length} vault(s)`);
             // Format the data
             // const formattedVaults = allVaults.map((vault) => {
             //     const data = {

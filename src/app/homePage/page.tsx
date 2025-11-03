@@ -51,6 +51,20 @@ const HomePage = () => {
             teams, DAOs, and decentralized protocols.
           </p>
 
+            {/* CTA Button */}
+          <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
+  <Link className='hover:underline' href="/splitter">
+    <button
+      className="relative px-8 py-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold text-lg shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 group"
+    >
+      Launch Klouw DApp
+    </button>
+  </Link>
+  <button className="px-8 py-4 rounded-full border-2 border-slate-300 text-slate-900 font-semibold text-lg hover:bg-slate-50 hover:border-slate-400 transition-all duration-300 bg-white/50 backdrop-blur-sm">
+    Documentation
+  </button>
+</div>
+
           {/* Features grid */}
                       <h2 className='text-xl font-bold mb-3'>How it works</h2>
 
@@ -86,19 +100,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          {/* CTA Button */}
-          <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
-  <Link className='hover:underline' href="/splitter">
-    <button
-      className="relative px-8 py-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold text-lg shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 group"
-    >
-      Launch Klouw DApp
-    </button>
-  </Link>
-  <button className="px-8 py-4 rounded-full border-2 border-slate-300 text-slate-900 font-semibold text-lg hover:bg-slate-50 hover:border-slate-400 transition-all duration-300 bg-white/50 backdrop-blur-sm">
-    Documentation
-  </button>
-</div>
+        
         </div>
       </div>
     </div>
