@@ -24,7 +24,8 @@ export const SolanaProvider: FC<SolanaProviderProps> = ({ children }) => {
 
   // You can also provide a custom RPC endpoint
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-const wallets = useMemo(() => [], []);
+  const wallets = useMemo(() => [], []);
+  
   return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets} autoConnect>

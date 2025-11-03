@@ -4,16 +4,18 @@ import idl from '@/app/anchor-idl/idl.json';
 // import { TokenSplitter } from "@/app/anchor-idl/idlType";
 import { PublicKey, SystemProgram,  } from "@solana/web3.js";
 import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export const useCloseVault = () => {
     const { publicKey } = useWallet();
     const { connection } = useConnection();
     const wallet = useAnchorWallet();
    
-    const closeVault = async (mintAddress: string) => {
+    const closeVault = async (mintAddress: string):Promise<string> => {
         if (!wallet || !publicKey) {
-            console.error("Wallet not connected");
-            return;
+            throw new Error("Wallet not connected");
+            
         }
        
         try {
@@ -82,5 +84,21 @@ export const useCloseVault = () => {
         }
     }
     
-    return { closeVault };
+    const { mutateAsync:close, isPending} = useMutation({
+        mutationFn: closeVault,
+        onSuccess: (data: string) => {
+                                // 'data' is the transaction signature string from InitializeVault
+                                toast.success("Vault Closed Successfully!", {
+                                    description: `Transaction: ${data}`,
+                                    action: {
+                                        label: "View on Explorer",
+                                        onClick: () => window.open(`https://explorer.solana.com/tx/${data}?cluster=devnet`, '_blank')
+                                    }
+                                });
+                            },
+                            onError: (error: Error) => {
+                                toast.error(`Failed to Close Vault. Please try again.: ${error.message}`);
+                            }
+    })
+    return { close, isPending };
 }

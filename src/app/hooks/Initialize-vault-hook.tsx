@@ -76,29 +76,19 @@ export const useInitializeVault = () => {
             console.log("Vault initialized successfully!");
             return tx;
           
-        } catch (error) {
-            const err = error as Error & {
-                logs?: string[];
-                message?: string;
-            };
-
-            console.error("Error Message:", err.message);
-
-            // Handle harmless client-side errors that shouldn't break the UI
-            const safeErrors = [
-                "already been processed",
-                "This transaction already been processed",
-            ];
-
-            if (safeErrors.some(msg => err.message?.includes(msg))) {
-                console.warn(
-                    "Non-critical transaction warning — likely a duplicate simulation or post-send issue."
-                );
-                return "success"; // Return a success indicator string
-            }
-
-            throw error;
-        }
+        } catch (error: unknown) {
+    const err = error as Error & { 
+        message?: string 
+    };
+    
+    if (err.message?.includes("already been processed")) {
+        console.warn("Transaction was already processed - this might be a false error");
+        // If you know the transaction succeeded, you might want to return a success status
+        return "Transaction completed (already processed)";
+    }
+    console.error("Initialization failed:", err);
+    throw error; 
+}
 
     }
 

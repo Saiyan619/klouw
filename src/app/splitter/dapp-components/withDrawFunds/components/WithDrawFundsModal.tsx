@@ -1,15 +1,14 @@
 import React from 'react'
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Button } from '@/components/ui/button'
 import { useWithDrawFunds } from '@/app/hooks/withdraw-funds-hook'
 
@@ -18,30 +17,36 @@ interface ChildComponentProps {
 }
 
 const WithDrawFundsModal = ({mint}:ChildComponentProps) => {
-    const { withdrawFunds } = useWithDrawFunds();
+    const { withdraw, isPending } = useWithDrawFunds();
     const handleWithdrawFunds = () => {
-        withdrawFunds(mint)
+        withdraw(mint)
     };
   return (
     <div className="w-full md:w-auto">
-      <AlertDialog>
-            <AlertDialogTrigger asChild>
-                        <Button className='w-full'>Wtihdraw Funds</Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your account
-              and remove your data from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleWithdrawFunds}>Withdraw</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        <Dialog>
+                      <DialogTrigger asChild>
+                          <Button className='w-full'>Withdraw Funds</Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[425px]">
+                          <DialogHeader>
+                              <DialogTitle>Deposit Vault</DialogTitle>
+                              <DialogDescription>
+                                  Are you absolutely sure?. This action cannot be undone.
+                              </DialogDescription>
+                          </DialogHeader>
+                          
+                          <DialogFooter>
+                              <DialogClose asChild>
+                                  <Button variant="outline" type="button" disabled={isPending}>
+                                      Cancel
+                                  </Button>
+                              </DialogClose>
+                              <Button onClick={handleWithdrawFunds} disabled={isPending}>
+                                          {isPending ? "Withdrawing..." : "Withdraw Funds"}
+                              </Button>
+                          </DialogFooter>
+                      </DialogContent>
+                  </Dialog>
     </div>
   )
 }

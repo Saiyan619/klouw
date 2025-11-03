@@ -3,6 +3,8 @@ import { useAnchorWallet, useConnection, useWallet } from "@solana/wallet-adapte
 import idl from '@/app/anchor-idl/idl.json';
 import { PublicKey, SystemProgram } from "@solana/web3.js";
 import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 
 export const useWithDrawFunds = ()=>{
@@ -10,10 +12,9 @@ export const useWithDrawFunds = ()=>{
     const { connection } = useConnection();
     const { publicKey } = useWallet();
 
-    const withdrawFunds = async (mintAddress: string) => {
+    const withdrawFunds = async (mintAddress: string):Promise<string> => {
         if (!wallet || !publicKey) {
-            console.error("wallet not connected");
-            return;
+            throw new Error("wallet not connected");
         }
 
         try {
@@ -74,5 +75,22 @@ export const useWithDrawFunds = ()=>{
 
     }
 
-    return { withdrawFunds };
+    const { mutateAsync:withdraw, isPending } = useMutation({
+        mutationFn: withdrawFunds,
+        onSuccess: (data: string) => {
+                        // 'data' is the transaction signature string from InitializeVault
+                        toast.success("Funds Withdrawn Successfully!", {
+                            description: `Transaction: ${data}`,
+                            action: {
+                                label: "View on Explorer",
+                                onClick: () => window.open(`https://explorer.solana.com/tx/${data}?cluster=devnet`, '_blank')
+                            }
+                        });
+                    },
+                    onError: (error: Error) => {
+                        toast.error(`Failed to Withdraw funds. Please try again.: ${error.message}`);
+                    }
+    })
+
+    return { withdraw, isPending  };
 }

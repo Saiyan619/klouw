@@ -30,9 +30,6 @@ const DepositVaultModal = ({ mint }: ChildComponentProps) => {
             alert("Please enter a valid amount");
             return;
         }
-
-        
-        setIsLoading(true);
         try {
             await depositToVault({ mintAddress: mint, amount: parseInt(amount) });
             // Success - you might want to close the dialog or show a success message
@@ -40,9 +37,7 @@ const DepositVaultModal = ({ mint }: ChildComponentProps) => {
         } catch (error) {
             console.error("Deposit failed:", error);
             // Handle error in UI (show toast, alert, etc.)
-        } finally {
-            setIsLoading(false);
-        }
+        } 
     }
 
     return (
@@ -68,7 +63,7 @@ const DepositVaultModal = ({ mint }: ChildComponentProps) => {
                                 placeholder="0.00"
                                 value={amount}
                                 onChange={(e) => setAmount(e.target.value)}
-                                disabled={isLoading}
+                                disabled={isPending}
                             />
                             <p className="text-sm text-muted-foreground">Enter the amount of tokens to deposit</p>
                         </div>
@@ -76,7 +71,7 @@ const DepositVaultModal = ({ mint }: ChildComponentProps) => {
                     
                     <DialogFooter>
                         <DialogClose asChild>
-                            <Button variant="outline" type="button" disabled={isLoading}>
+                            <Button variant="outline" type="button" disabled={isPending}>
                                 Cancel
                             </Button>
                         </DialogClose>

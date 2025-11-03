@@ -1,15 +1,14 @@
 import React from 'react'
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Button } from '@/components/ui/button'
 import { useCloseVault } from '@/app/hooks/close-vault-hook';
 
@@ -18,30 +17,38 @@ interface ChildComponentProps {
 }
 
 const CloseVaultModal = ({ mint }: ChildComponentProps) => {
-  const { closeVault } = useCloseVault();
+  const {  close, isPending  } = useCloseVault();
   const handleCloseVault = async () => {
-    closeVault(mint);
+    close(mint);
   }
   return (
     <div className="w-full md:w-auto">
-      <AlertDialog>
-            <AlertDialogTrigger asChild>
-                  <Button className='w-full'>Close Account</Button>
-  </AlertDialogTrigger>
-  <AlertDialogContent>
-    <AlertDialogHeader>
-      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-      <AlertDialogDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
-      </AlertDialogDescription>
-    </AlertDialogHeader>
-    <AlertDialogFooter>
-      <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction onClick={handleCloseVault}>Close Vault</AlertDialogAction>
-    </AlertDialogFooter>
-  </AlertDialogContent>
-</AlertDialog>
+
+      <Dialog>
+                            <DialogTrigger asChild>
+                                <Button className='w-full'>Close Vault</Button>
+                            </DialogTrigger>
+                            <DialogContent className="">
+                                <DialogHeader>
+                                    <DialogTitle>Close Vault</DialogTitle>
+                                    <DialogDescription>
+                                        Are you absolutely sure?. This action cannot be undone. This will permanently delete your account
+                    and remove your data from our servers.
+                                    </DialogDescription>
+                                </DialogHeader>
+                                
+                                <DialogFooter>
+                                    <DialogClose asChild>
+                                        <Button variant="outline" type="button" disabled={isPending}>
+                                            Cancel
+                                        </Button>
+                                    </DialogClose>
+                                    <Button onClick={handleCloseVault} disabled={isPending}>
+                                                {isPending ? "Closing..." : "Close Vault"}
+                                    </Button>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
     </div>
   )
 }
