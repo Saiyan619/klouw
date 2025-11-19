@@ -36,21 +36,22 @@ This project demonstrates full-stack web3 engineering on Solana, including progr
 ### On-Chain Program
 - Rust  
 - Anchor Framework  
-- Solana Program Library (SPL Tokens)  
+- Solana Program Library (SPL Tokens)
+- CPIs
 
 ### Frontend
 - Next.js  
 - React  
 - TypeScript  
 - Solana Wallet Adapter  
-- TailwindCSS (if applicable)
+- TailwindCSS
 
 ---
 
 ## Repository Links
 
 - Frontend: https://github.com/Saiyan619/klouw  
-- Blockchain Program: https://github.com/Saiyan619/klouw_program
+- Blockchain Program: [https://github.com/Saiyan619/klouw_program](https://github.com/Saiyan619/token-splitter)
 
 ---
 
